@@ -4,7 +4,7 @@ export const Main = styled.div`
 height: 100%;
 display: flex;
 flex-direction: column;
-padding: 30px 0 0 20px;
+padding: 30px 0 20px 0 20px;
 margin: 0 20px;
 box-sizing: border-box;
 `
