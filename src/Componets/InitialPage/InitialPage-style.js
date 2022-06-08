@@ -10,6 +10,17 @@ margin: 0 20px;
 img {
     width: 100%;
     margin-bottom: 40px;
+    z-index: 1;
+}
+`
+
+export const Logo = styled.div`
+height: 60px;
+top: 20px;
+right: 20px;
+position: absolute;
+img {
+    width: 150px;
 }
 `
 
