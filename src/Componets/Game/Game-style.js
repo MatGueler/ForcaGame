@@ -1,10 +1,20 @@
 import styled from 'styled-components'
 
 export const Main = styled.div`
-/* height: 100%; */
+height: 100%;
 display: flex;
 flex-direction: column;
-margin: 20px;
+justify-content: space-around;
+padding-bottom: 50px;
+margin: 0 20px;
+box-sizing: border-box;
+`
+
+export const Back = styled.div`
+position: absolute;
+top: 20px;
+left: 20px;
+cursor: pointer;
 `
 
 export const Life = styled.div`

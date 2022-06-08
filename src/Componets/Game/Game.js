@@ -1,7 +1,10 @@
 import { Container } from "../Container/Container";
-import { Main, Life, Heart, Keyboard, Button, Word, Answer, Chosen, Background, Reload } from './Game-style'
+import { Main, Back, Life, Heart, Keyboard, Button, Word, Answer, Chosen, Background, Reload } from './Game-style'
 import { FaHeartBroken } from 'react-icons/fa';
-import { useEffect, useState } from "react";
+import { TiArrowBack } from 'react-icons/ti';
+import { useContext, useEffect, useState } from "react";
+import WordContext from "../Contexts/WordContext";
+import { useNavigate } from "react-router-dom";
 
 function Verification({ item, word, wordsChosen, setWordsChosen, pontuation, setPontuation, death, setDeath, lost, setLost }) {
 
@@ -79,7 +82,9 @@ function AddMyWord({ item, wordsChosen }) {
 
 function Game() {
 
-    const word = 'GRAMADO';
+    const { word } = useContext(WordContext);
+
+    let navigate = useNavigate()
 
     const [myWord, setMyWord] = useState([]);
     const [wordsChosen, setWordsChosen] = useState([]);
@@ -105,8 +110,13 @@ function Game() {
     return (
         <Container>
             <Main>
+                <Back onClick={() => navigate('/modo')}>
+                    <TiArrowBack color='white' size={25} />
+                </Back>
                 <Life>
-                    {death.map((item) => <Heart><FaHeartBroken color='red' /></Heart>)}
+                    {death.map((item) => <Heart>
+                        <FaHeartBroken color='red' size={25} />
+                    </Heart>)}
                 </Life>
                 <Word>
                     {myWord.map((item, index) => <AddMyWord key={index} item={item} wordsChosen={wordsChosen} />)}
