@@ -4,8 +4,7 @@ export const Main = styled.div`
 height: 100%;
 display: flex;
 flex-direction: column;
-justify-content: space-around;
-padding-bottom: 50px;
+padding: 30px 0 0 20px;
 margin: 0 20px;
 box-sizing: border-box;
 `
@@ -70,15 +69,19 @@ height: 100px;
 display: flex;
 justify-content: center;
 flex-wrap: wrap;
+
+button:active{
+    background-color: red;
+}
 `
 
 export const Button = styled.button`
-width: 20px;
-height: 20px;
+width: 40px;
+height: 40px;
 border: 0;
-border-radius: 2px;
+border-radius: 5px;
 cursor: pointer;
-font-size: 10px;
+font-size: 20px;
 font-weight: bold;
 color: ${(props) => props.color};
 background-color: white;
