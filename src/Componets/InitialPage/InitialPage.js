@@ -11,7 +11,7 @@ function InitialPage() {
             <Main>
                 <img src='https://rachacuca.com.br/static/hangman/hangman-game-og-share.png' />
                 <Button onClick={() => navigate('/modo')}>
-                    Difícil
+                    Vamos jogar!
                 </Button>
             </Main>
         </Container>

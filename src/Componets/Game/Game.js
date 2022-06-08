@@ -1,61 +1,123 @@
 import { Container } from "../Container/Container";
-import { Main, Life, Keyboard, Button, Word } from './Game-style'
-import { FaHeart } from 'react-icons/fa';
+import { Main, Life, Heart, Keyboard, Button, Word, Answer, Chosen, Background, Reload } from './Game-style'
+import { FaHeartBroken } from 'react-icons/fa';
+import { useEffect, useState } from "react";
 
-function Verification({ item, word }) {
+function Verification({ item, word, wordsChosen, setWordsChosen, pontuation, setPontuation, death, setDeath, lost, setLost }) {
 
     let verification = 0;
 
-    for (let counter = 0; counter < word.length; counter++) {
-        if (word[counter] === item) {
+    let point = pontuation;
+
+    let err = death;
+
+    let verificationLetter = 0
+
+    for (let counter = 0; counter < wordsChosen.length; counter++) {
+        if (item === wordsChosen[counter]) {
+            verificationLetter += 1;
+        }
+    }
+    if (verificationLetter === 0) {
+        for (let counter = 0; counter < word.length; counter++) {
+            if (word[counter] === item) {
+                verification += 1;
+                point += 1
+                setPontuation(point)
+                console.log(item)
+            }
+        }
+
+        if (verification === 0) {
+            err.push('1')
+            setDeath(err)
+            console.log('naotem')
+        }
+
+        setWordsChosen([...wordsChosen, item])
+
+        if (point === word.length) {
+            alert('Você ganhou!')
+        }
+        if (err.length >= 5) {
+            setLost(!lost)
+        }
+    }
+}
+
+function GameOver() {
+    return (
+        <Background>
+            <Reload>
+                <img src="https://c.tenor.com/BTMPECC4hS4AAAAC/game-over.gif" />
+            </Reload>
+        </Background>
+    )
+}
+
+function AddMyWord({ item, wordsChosen }) {
+
+    let verification = 0;
+
+    for (let counter = 0; counter < wordsChosen.length; counter++) {
+        if (item === wordsChosen[counter]) {
             verification += 1;
-            console.log(item)
         }
     }
 
     if (verification === 0) {
-        console.log('naotem')
+        return (
+            <Answer color='white' back='white'>{item}</Answer>
+        )
+    }
+    else {
+        return (
+            <Answer color='white' back='green'>{item}</Answer>
+        )
     }
 }
 
 function Game() {
 
-    const word = 'AREIA'
+    const word = 'GRAMADO';
+
+    const [myWord, setMyWord] = useState([]);
+    const [wordsChosen, setWordsChosen] = useState([]);
+    const [pontuation, setPontuation] = useState(0);
+    const [death, setDeath] = useState([])
+    const [lost, setLost] = useState(false)
 
     const alphabet =
         [
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "V", "W", "X", "Y", "Z"
         ]
 
-    function AddLetter() {
-
-        let result = ''
+    useEffect(() => {
+        let u = []
 
         for (let counter = 0; counter < word.length; counter++) {
-            result += `_ `
+            u.push(word[counter])
         }
-
-        return (
-            result
-        )
-    }
+        setMyWord(u)
+        console.log(u)
+    }, [])
 
     return (
         <Container>
             <Main>
                 <Life>
-                    <FaHeart color='red' />
-                    <FaHeart color='red' />
-                    <FaHeart color='red' />
-                    <FaHeart color='red' />
-                    <FaHeart color='red' />
+                    {death.map((item) => <Heart><FaHeartBroken color='red' /></Heart>)}
                 </Life>
                 <Word>
-                    <AddLetter />
+                    {myWord.map((item, index) => <AddMyWord key={index} item={item} wordsChosen={wordsChosen} />)}
                 </Word>
+                <Chosen>
+                    {wordsChosen.map((item, index) => <h1 key={index}>{item}</h1>)}
+                </Chosen>
                 <Keyboard>
-                    {alphabet.map((item, index) => <Button key={index} onClick={() => Verification({ item, word })}>{item}</Button>)}
+                    {alphabet.map((item, index) => <Button key={index} onClick={() => Verification({ item, word, wordsChosen, setWordsChosen, pontuation, setPontuation, death, setDeath, lost, setLost })}>{item}</Button>)}
                 </Keyboard>
+                {lost ? <GameOver /> : ''}
             </Main>
         </Container>
     )
